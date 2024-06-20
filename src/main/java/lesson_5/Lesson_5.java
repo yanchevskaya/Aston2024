@@ -9,9 +9,9 @@ public class Lesson_5 {
         checkSumSign();
         printColor();
         compareNumbers();
-        System.out.println(ifTrue(1, 1));
-        ifPositive(5);
-        System.out.println(ifNegative(-9));
+        System.out.println(isTrue(1, 1));
+        isPositive(5);
+        System.out.println(isNegative(-9));
         printWord("Wonderland", 17);
         System.out.println(ifLeapYear(1200));
         System.out.println(Arrays.toString(changeArray()));
@@ -40,10 +40,8 @@ public class Lesson_5 {
     */
 
     public static void checkSumSign() {
-        int a, b;
-
-        a = -56;
-        b = 73;
+        int a = -56;
+        int b = 73;
 
         if ((a + b) >= 0) {
             System.out.println("Сумма положительная");
@@ -88,7 +86,7 @@ public class Lesson_5 {
         if (a >= b) {
             System.out.println("a >= b");
         } else {
-            System.out.println("a<b");
+            System.out.println("a < b");
         }
     }
 
@@ -97,7 +95,7 @@ public class Lesson_5 {
     от 10 до 20 (включительно), если да – вернуть true, в противном случае – false
      */
 
-    public static boolean ifTrue(int a, int b) {
+    public static boolean isTrue(int a, int b) {
 
         return ((a + b) >= 10 && (a + b) <= 20);
     }
@@ -107,7 +105,7 @@ public class Lesson_5 {
     положительное ли число передали или отрицательное. Замечание: ноль считаем положительным числом
      */
 
-    public static void ifPositive(int a) {
+    public static void isPositive(int a) {
 
         if (a >= 0) {
             System.out.println("Число положительное");
@@ -121,7 +119,7 @@ public class Lesson_5 {
      если число отрицательное, и вернуть false если положительное. Замечание: ноль считаем положительным числом
      */
 
-    public static boolean ifNegative(int a) {
+    public static boolean isNegative(int a) {
 
         return a < 0;
     }
@@ -226,9 +224,7 @@ public class Lesson_5 {
 
         int[] array = new int[len];
 
-        for (int i = 0; i < array.length; i++) {
-            array[i] = initialValue;
-        }
+        Arrays.fill(array, initialValue);
         return array;
     }
 }
