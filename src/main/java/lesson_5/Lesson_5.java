@@ -3,24 +3,6 @@ package lesson_5;
 import java.util.Arrays;
 
 public class Lesson_5 {
-
-    public static void main(String[] args) {
-        printThreeWords();
-        checkSumSign();
-        printColor();
-        compareNumbers();
-        System.out.println(isTrue(1, 1));
-        isPositive(5);
-        System.out.println(isNegative(-9));
-        printWord("Wonderland", 17);
-        System.out.println(ifLeapYear(1200));
-        System.out.println(Arrays.toString(changeArray()));
-        System.out.println(Arrays.toString(fillArray()));
-        System.out.println(Arrays.toString(multiplyArray()));
-        doubleArray();
-        System.out.println(Arrays.toString(arrayInit(5, 10)));
-    }
-
     /*
     Создайте метод printThreeWords(), который при вызове должен отпечатать в столбец три слова:
     Orange, Banana, Apple
