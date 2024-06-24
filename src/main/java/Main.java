@@ -1,5 +1,7 @@
 import lesson_6.Employee;
 import lesson_6.Park;
+
+import java.math.BigDecimal;
 import java.util.Arrays;
 import static lesson_5.Lesson_5.*;
 
@@ -23,13 +25,6 @@ public class Main {
         empArray[4] = new Employee("Maria Vebber", "Engineer", "mariavebber@gmail.com",
                 "+79117869877", 250000, 30);
 
-        for (Employee employee : empArray){
-            employee.info();
-        }
-
-        //Создать объект внутреннего класса
-
-        Park.Attraction gorki = new Park().new Attraction("Весёлые горки", 500, "10.00 - 21.00");
 
     }
 

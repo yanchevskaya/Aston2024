@@ -6,15 +6,15 @@ package lesson_6;
 Внутри класса «Сотрудник» написать метод, который выводит информацию об объекте в консоль.
  */
 public class Employee {
-    private String name;
+    private String fio;
     private String position;
     private String email;
     private String phoneNumber;
     private int salary;
     private int age;
 
-    public Employee(String name, String position, String email, String phoneNumber, int salary, int age) {
-        this.name = name;
+    public Employee(String fio, String position, String email, String phoneNumber, int salary, int age) {
+        this.fio = fio;
         this.position = position;
         this.email = email;
         this.phoneNumber = phoneNumber;
@@ -22,8 +22,8 @@ public class Employee {
         this.age = age;
     }
 
-    public String getName() {
-        return name;
+    public String getFio() {
+        return fio;
     }
 
     public String getPosition() {
@@ -48,7 +48,7 @@ public class Employee {
 
     public void info(){
 
-        System.out.printf("Name: %s, age: %d, position: %s, e-mail: %s, phone number: %s, salary: %d\n",
-                getName(), getAge(), getPosition(), getEmail(), getPhoneNumber(), getSalary());
+        System.out.printf("FIO: %s, age: %d, position: %s, e-mail: %s, phone number: %s, salary: %d\n",
+                getFio(), getAge(), getPosition(), getEmail(), getPhoneNumber(), getSalary());
     }
 }
