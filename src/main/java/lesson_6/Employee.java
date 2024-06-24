@@ -48,7 +48,7 @@ public class Employee {
 
     public void info(){
 
-        System.out.printf("Name: %s, age: %d, position: %s, e-mail: %s, phone number: %s, salary: %d",
+        System.out.printf("Name: %s, age: %d, position: %s, e-mail: %s, phone number: %s, salary: %d\n",
                 getName(), getAge(), getPosition(), getEmail(), getPhoneNumber(), getSalary());
     }
 }

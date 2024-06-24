@@ -23,6 +23,10 @@ public class Main {
         empArray[4] = new Employee("Maria Vebber", "Engineer", "mariavebber@gmail.com",
                 "+79117869877", 250000, 30);
 
+        for (Employee employee : empArray){
+            employee.info();
+        }
+
         //Создать объект внутреннего класса
 
         Park.Attraction gorki = new Park().new Attraction("Весёлые горки", 500, "10.00 - 21.00");
