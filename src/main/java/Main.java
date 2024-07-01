@@ -1,21 +1,18 @@
 import static lesson_5.Lesson_5.*;
-
+import java.util.Arrays;
 import lesson_6.Employee;
 import lesson_7.*;
 import lesson_8.*;
-
-import java.util.Arrays;
-
 import static lesson_8.Lesson_8.sumArray;
 
 public class Main {
 
     public static void main(String[] args) {
 
-             /*
+        /*
         В методе main() вызвать полученный метод, обработать возможные исключения MyArraySizeException
         и MyArrayDataException и вывести результат расчета
-         */
+        */
 
         String[][] firstArray = {{"4", "73", "76", "55"}, {"Winter", "Spring", "Summer", "Autumn"}, {"December", "January", "February", "13"}, {"March", "April", "May", "75"}};
 
@@ -49,7 +46,7 @@ public class Main {
             System.out.println(e);
         }
 
-
+        /*
         //Lesson 7
 
         Cat finch = new Cat("Finch");
@@ -84,13 +81,11 @@ public class Main {
         System.out.println(bowlOne.getAmountOfFood());
 
         bowlOne.addFood(40);
-        for (
-                Cat any : cats) {
+        for (Cat any : cats) {
             any.eat(bowlOne, 10);
         }
 
-        for (
-                Cat cat : cats) {
+        for (Cat cat : cats) {
             System.out.println(cat.isFullness());
         }
 
@@ -135,34 +130,20 @@ public class Main {
         printColor();
 
         compareNumbers();
-        System.out.
-
-                println(isTrue(1, 1));
+        System.out.println(isTrue(1, 1));
 
         isPositive(5);
-        System.out.
-
-                println(isNegative(-9));
+        System.out.println(isNegative(-9));
 
         printWord("Wonderland", 17);
-        System.out.
-
-                println(ifLeapYear(1200));
-        System.out.
-
-                println(Arrays.toString(changeArray()));
-        System.out.
-
-                println(Arrays.toString(fillArray()));
-        System.out.
-
-                println(Arrays.toString(multiplyArray()));
+        System.out.println(ifLeapYear(1200));
+        System.out.println(Arrays.toString(changeArray()));
+        System.out.println(Arrays.toString(fillArray()));
+        System.out.println(Arrays.toString(multiplyArray()));
 
         doubleArray();
-        System.out.
-
-                println(Arrays.toString(arrayInit(5, 10)));
-
+        System.out.println(Arrays.toString(arrayInit(5, 10)));
+        */
     }
 }
 
