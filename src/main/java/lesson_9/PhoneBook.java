@@ -25,9 +25,7 @@ public class PhoneBook {
         } else phoneBook.get(name).add(phoneNumber);
     }
 
-    public ArrayList<String> get (String name){
+    public ArrayList<String> get(String name) {
         return phoneBook.get(name);
-            }
-
-
+    }
 }
