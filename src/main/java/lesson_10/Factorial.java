@@ -5,7 +5,7 @@ public class Factorial {
     /*
     Напишите программу, позволяющую вычислить факториал числа
      */
-    public long factorial(int number) {
+    public static long factorial(int number) {
         if (number < 0)
             throw new IllegalArgumentException("Number must be positive");
 
