@@ -1,43 +1,38 @@
 package lesson_10;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import java.math.BigInteger;
+import static lesson_10.Factorial.factorial;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class FactorialTest {
-    private Factorial factorial;
-
-    @BeforeEach
-    public void setUp() {
-        factorial = new Factorial();
-    }
-
-    @AfterEach
-    public void tearDown() {
-        factorial = null;
-    }
 
     @Test
     public void testFactorialZero() {
-        Assertions.assertEquals(1, factorial.factorial(0));
+        assertEquals(BigInteger.valueOf(1), factorial(0));
     }
 
     @Test
     public void testFactorialOne() {
-        Assertions.assertEquals(1, factorial.factorial(1));
+        assertEquals(BigInteger.valueOf(1), factorial(1));
     }
 
     @Test
     public void testFactorialFive() {
-        Assertions.assertEquals(120, factorial.factorial(5));
+        assertEquals(BigInteger.valueOf(5), factorial(100));
     }
 
-//    @Test
-//    public void testFactorialNegative() {
-//
-//        ApplicationException thrown = Assertions.assertThrows(ApplicationException.class, () -> {
-//            //Code under test
-//        });
-//    }
+    @Test
+    public void testFactorialOneHundret() {
+        assertEquals(new BigInteger("93326215443944152681699238856266700490715968264381621468592963895217599993229915608941463976156518286253697920827223758251185210916864000000000000000000000000"), factorial(100));
+    }
+
+    @Test
+    public void testFactorialNegative() {
+
+        IllegalArgumentException exception = Assertions.assertThrows(IllegalArgumentException.class, () -> factorial(-1));
+
+        assertEquals("Number must be positive", exception.getMessage());
+    }
 }

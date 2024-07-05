@@ -1,19 +1,24 @@
 package lesson_10;
 
+import java.math.BigInteger;
+
 public class Factorial {
 
     /*
     Напишите программу, позволяющую вычислить факториал числа
      */
-    public long factorial(int number) {
-        if (number < 0)
-            throw new IllegalArgumentException("Number must be positive");
+    public static BigInteger factorial(int number) {
+        if (number < 0) throw new IllegalArgumentException("Number must be positive");
 
-        long result = 1;
-        for (int i = 1; i <= number; i++) {
-            result *= i;
+        else if (number <= 1) {
+            return BigInteger.valueOf(1);
         }
-        return result;
+        else {
+            return BigInteger.valueOf(number).multiply(factorial(number - 1));
+        }
+
     }
+
+
 }
 
