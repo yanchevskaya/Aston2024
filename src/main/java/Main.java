@@ -1,8 +1,12 @@
 import static lesson_5.Lesson_5.*;
-import java.util.Arrays;
+
+import java.util.*;
+
 import lesson_6.Employee;
 import lesson_7.*;
 import lesson_8.*;
+import lesson_9.PhoneBook;
+
 import static lesson_8.Lesson_8.sumArray;
 
 public class Main {
@@ -10,9 +14,39 @@ public class Main {
     public static void main(String[] args) {
 
         /*
+        1. Создать массив с набором слов (10-20 слов, должны встречаться повторяющиеся).
+         Найти и вывести список уникальных слов, из которых состоит массив (дубликаты не считаем).
+          Посчитать, сколько раз встречается каждое слово. (реализовать с использованием коллекций)
+         */
+
+        ArrayList<String> list = new ArrayList<>(Arrays.asList("небо", "ворона", "радуга", "день", "земля",
+                "вода", "небо", "ананас", "апельсин", "виноград", "изумруд", "виноград", "радуга", "чайка",
+                "чайка", "книга", "машина", "самолёт", "танец", "самолёт"));
+
+        HashSet<String> set = new HashSet<>(list);
+        System.out.println(set);
+
+        for (String one : set) {
+            System.out.println(one + ": " + Collections.frequency(list, one));
+        }
+
+        PhoneBook myPhoneBook = new PhoneBook();
+
+        myPhoneBook.add("Ianchevskaia", "+79111411913");
+        myPhoneBook.add("Ianchevskaia", "+79111416787");
+        myPhoneBook.add("Morozova", "+79139871913");
+        myPhoneBook.add("Morozova", "+79139871813");
+        myPhoneBook.add("Shmidt", "+79867890909");
+
+        System.out.println(myPhoneBook.get("Morozova"));
+        System.out.println(myPhoneBook.get("Ianchevskaia"));
+        System.out.println(myPhoneBook.get("Shmidt"));
+
+
+        /*
         В методе main() вызвать полученный метод, обработать возможные исключения MyArraySizeException
         и MyArrayDataException и вывести результат расчета
-        */
+
 
         String[][] firstArray = {{"4", "73", "76", "55"}, {"Winter", "Spring", "Summer", "Autumn"}, {"December", "January", "February", "13"}, {"March", "April", "May", "75"}};
 
@@ -46,7 +80,7 @@ public class Main {
             System.out.println(e);
         }
 
-        /*
+
         //Lesson 7
 
         Cat finch = new Cat("Finch");
