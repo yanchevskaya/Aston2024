@@ -20,12 +20,13 @@ public class FactorialTest {
 
     @Test
     public void testFactorialFive() {
-        assertEquals(BigInteger.valueOf(5), factorial(100));
+        assertEquals(BigInteger.valueOf(120), factorial(5));
     }
 
     @Test
-    public void testFactorialOneHundret() {
-        assertEquals(new BigInteger("93326215443944152681699238856266700490715968264381621468592963895217599993229915608941463976156518286253697920827223758251185210916864000000000000000000000000"), factorial(100));
+    public void testFactorialOneHundred() {
+        assertEquals(new BigInteger("93326215443944152681699238856266700490715968264381621468592963895217599993229915608941463976156518286253697920827223758251185210916864000000000000000000000000"),
+                factorial(100));
     }
 
     @Test
