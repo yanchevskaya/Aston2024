@@ -23,17 +23,17 @@ public class MTSTest extends BaseTest {
     }
 
     @Test(description = "Check if link works")
-    void isLinkWorks() {
+    void isLinkWorksTest() {
         getPaymentModule().linkWorks();
     }
 
     @Test(description = "Check if link response")
-    void isLinkResponse() {
+    void isLinkResponseTest() {
         getPaymentModule().connectionWorks();
     }
 
     @Test(description = "Check button", priority = 5, dataProvider = "button")
-    void isButtonWorks(String number, String payment) {
+    void isButtonWorksTest(String number, String payment) {
         getPaymentModule().buttonClick(number,payment);
     }
 
