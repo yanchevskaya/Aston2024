@@ -21,7 +21,7 @@ public class PaymentModule {
     @FindBy(id = "cookie-agree")
     WebElement cookies;
 
-    @FindBy(xpath = "//div[@class='pay__partners']/img")
+    @FindBy(xpath = "//div[@class='pay__partners']//img")
     List<WebElement> logos;
 
     @FindBy(linkText = "Подробнее о сервисе")
