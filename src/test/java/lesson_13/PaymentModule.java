@@ -1,5 +1,6 @@
 package lesson_13;
 
+import com.beust.ah.A;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -7,9 +8,11 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.time.Duration;
+import java.nio.file.WatchEvent;
+import java.util.ArrayList;
 import java.util.List;
 
 public class PaymentModule {
@@ -34,13 +37,10 @@ public class PaymentModule {
     WebElement phoneNumber;
 
     @FindBy(id = "connection-sum")
-    WebElement paymentAmount;
+    WebElement paymentAmountPhone;
 
     @FindBy(xpath = "//form[@id='pay-connection']/button")
     WebElement buttonContinue;
-
-    @FindBy(xpath = "(//div[@class='pay-description__cost']/span)[1]")
-    WebElement paymentText;
 
     public PaymentModule(WebDriver webDriver) {
         this.webDriver = webDriver;
@@ -52,54 +52,45 @@ public class PaymentModule {
         cookies.click();
     }
 
-    //1. Проверить название указанного блока
-    void checkModuleName() {
-        Assert.assertEquals(moduleName.getText(),
-                "Онлайн пополнение\nбез комиссии", "Название неверное");
+    //2. Проверить наличие логотипов платёжных систем
+    int logoAmount() {
+        return logos.size();
     }
 
-    //2. Проверить наличие логотипов платёжных систем
-    void logoPresence() {
+    List<String> listOfLogosName() {
+        List<String> logosName = new ArrayList<>();
         for (WebElement element : logos) {
-            Assert.assertTrue(element.isDisplayed(), "Ошибка в отображении лого");
+            logosName.add(element.getAttribute("alt"));
         }
+        return logosName;
     }
 
     //3. Проверить работу ссылки «Подробнее о сервисе»  *first option
-    void linkWorks() {
+    AboutService clickLinkAboutService() {
         link.click();
-        Assert.assertEquals(webDriver.getCurrentUrl(),
-                "https://www.mts.by/help/poryadok-oplaty-i-bezopasnost-internet-platezhey/",
-                "The link doesn't work");
-        webDriver.navigate().back();
+        return new AboutService(webDriver);
     }
 
     //*second option
-    void connectionWorks() {
+    int checkLinkResponse() {
         String url = link.getAttribute("href");
         try {
             HttpURLConnection httpURLConnect = (HttpURLConnection) new URL(url).openConnection();
             httpURLConnect.connect();
-            Assert.assertTrue(httpURLConnect.getResponseCode() < 400);
+            return httpURLConnect.getResponseCode();
         } catch (Exception e) {
             e.getStackTrace();
         }
+        return 700;
     }
 
     //Заполнить поля и проверить работу кнопки «Продолжить»
-    void buttonClick(String number, String payment) {
+    IFrame checkButtonClick(String number, String payment) {
         phoneNumber.sendKeys(number);
-        paymentAmount.sendKeys(payment);
+        paymentAmountPhone.sendKeys(payment);
         buttonContinue.click();
         webDriver.switchTo().frame(iFrame);
-
-   //без явного ожидания тест падает
-        new WebDriverWait(webDriver, Duration.ofSeconds(5))
-                .until(ExpectedConditions.visibilityOf(paymentText));
-
-        Assert.assertEquals((paymentText).getText(), payment + ".00 BYN");
-
-
+        return new IFrame(webDriver);
     }
 }
 
