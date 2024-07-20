@@ -1,4 +1,4 @@
-package lesson_13;
+package lesson_13.model;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
@@ -10,11 +10,5 @@ public class AboutService {
         PageFactory.initElements(webDriver, this);
     }
 
-    String getURL(){
-        return webDriver.getCurrentUrl();
     }
 
-    void returnToHomePage(){
-        webDriver.navigate().back();
-    }
-}

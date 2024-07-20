@@ -1,58 +1,48 @@
-package lesson_13;
+package lesson_13.model;
 
+import lesson_13.base.BasePage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
-public class IFrame {
+public class IFrame extends BasePage {
+
+    public IFrame(WebDriver webDriver) {
+        super(webDriver);
+    }
+
     @FindBy(xpath = "(//div[@class='pay-description__cost']/span)[1]")
-    WebElement paymentText;
+    public WebElement paymentText;
 
     @FindBy(xpath = "(//div[@class='pay-description__text']/span)[1]")
-    WebElement numberText;
+    public WebElement numberText;
 
     @FindBy(className = "header__close-icon")
     WebElement close;
 
     @FindBy(xpath = "//button[@class='colored disabled']")
-    WebElement buttonPay;
+    public WebElement buttonPay;
 
     @FindBy(xpath = "//label[@class = 'ng-tns-c46-1 ng-star-inserted']")
-    WebElement cardNumber;
+    public WebElement cardNumber;
 
     @FindBy(xpath = "//label[@class = 'ng-tns-c46-4 ng-star-inserted']")
-    WebElement validity;
+    public WebElement validity;
 
     @FindBy(xpath = "//label[@class = 'ng-tns-c46-3 ng-star-inserted']")
-    WebElement userName;
+    public WebElement userName;
 
     @FindBy(xpath = "//label[@class = 'ng-tns-c46-5 ng-star-inserted']")
-    WebElement CVC;
+    public WebElement CVC;
 
     @FindBy(xpath = "//div[@class='cards-brands ng-tns-c46-1']//img")
-    List<WebElement> logosIframe;
-
-    WebDriver webDriver;
-
-    public IFrame(WebDriver webDriver) {
-        this.webDriver = webDriver;
-        PageFactory.initElements(webDriver, this);
-    }
+    public List<WebElement> logosIframe;
 
 
-    void wait5(WebElement webElement) {
-        new WebDriverWait(webDriver, Duration.ofSeconds(5))
-                .until(ExpectedConditions.visibilityOf(webElement));
-    }
-
-     List<String> listOfLogosNameIframe() {
+     public List<String> listLogosNameIframe() {
         List<String> logosName = new ArrayList<>();
         for (WebElement element : logosIframe) {
             logosName.add(element.getAttribute("src"));
@@ -60,9 +50,23 @@ public class IFrame {
         return logosName;
     }
 
-    void closeIFrame() {
+    public List<String> listPlaceholderName() {
+        List<String> filedTitle = new ArrayList<>();
+
+        filedTitle.add(paymentText.getText());
+        filedTitle.add(numberText.getText());
+        filedTitle.add(cardNumber.getText());
+        filedTitle.add(validity.getText());
+        filedTitle.add(userName.getText());
+        filedTitle.add(CVC.getText());
+        filedTitle.add(buttonPay.getText());
+
+        return filedTitle;
+    }
+
+    public void closeIFrame() {
         close.click();
-        webDriver.navigate().refresh();
+        getWebDriver().navigate().refresh();
     }
 }
 
