@@ -4,8 +4,6 @@ import lesson_13.model.IFrame;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-
-import java.util.ArrayList;
 import java.util.List;
 
 /*
@@ -15,16 +13,12 @@ import java.util.List;
 
 
 public class MTSTest extends BaseTest {
-    private String url = "https://www.mts.by/help/poryadok-oplaty-i-bezopasnost-internet-platezhey/";
-    private List<String> logolist = List.of("Visa", "Verified By Visa", "MasterCard", "MasterCard Secure Code", "Белкарт");
-
-    private String sum = "Сумма";
-    private String email = "E-mail для отправки чека";
-
-
+    private final String URL = "https://www.mts.by/help/poryadok-oplaty-i-bezopasnost-internet-platezhey/";
+    private final List<String> LOGO_LIST = List.of("Visa", "Verified By Visa", "MasterCard", "MasterCard Secure Code", "Белкарт");
 
     @Test(description = "Check module online-pay name")
     public void checkModuleNameTest() {
+
         Assert.assertEquals(getPaymentModule().getModuleName(),
                 "Онлайн пополнение\nбез комиссии", "Название неверное");
     }
@@ -42,28 +36,32 @@ public class MTSTest extends BaseTest {
 
     @DataProvider
     public Object[][] logos() {
-
         return new Object[][]{
-                {5, logolist}
+                {5, LOGO_LIST}
         };
     }
 
     @Test(description = "Check if link works")
     void checkLinkWorksTest() {
-        Assert.assertEquals(getPaymentModule().getURLLinkAboutService(), url,
+
+        Assert.assertEquals(getPaymentModule().getURLLinkAboutService(), URL,
                 "The link about service doesn't work");
+
         getPaymentModule().returnToHomePage();
     }
 
     @Test(description = "Check if link response")
     void checkLinkResponseTest() {
+
         Assert.assertTrue(getPaymentModule().checkLinkResponse() < 400);
     }
 
     @Test(description = "Check payment button", dataProvider = "button")
     void checkButtonWorksTest(String number, String payment) {
+
         IFrame iFrame = getPaymentModule().buttonClick(number, payment);
         getPaymentModule().wait5(iFrame.paymentText);
+
         Assert.assertEquals(iFrame.paymentText.getText(), payment + ".00 BYN",
                 "Ошибка в сообщении с суммой");
 
@@ -78,8 +76,8 @@ public class MTSTest extends BaseTest {
     }
 
     @Test(dataProvider = "connection")
-    void checkPlaceholderTextPhoneTest(String option, String number, String amount, String email) {
-        ArrayList<String> listPlaceholders;
+    void checkPlaceholderTextTest(String option, String number, String amount, String email) {
+        List<String> listPlaceholders;
 
         listPlaceholders = getPaymentModule().checkPlaceholderText(option);
 
@@ -88,14 +86,16 @@ public class MTSTest extends BaseTest {
         Assert.assertEquals(listPlaceholders.get(2), email);
     }
 
-
     @DataProvider
     public Object[][] connection() {
+        String sum = "Сумма";
+        String email = "E-mail для отправки чека";
+
         return new Object[][]{
-                {"phone", "Номер телефона", sum,email},
-                {"internet", "Номер абонента", sum,email},
-                {"instalment", "Номер счета на 44", sum,email},
-                {"arrears", "Номер счета на 2073", sum,email}
+                {"phone", "Номер телефона", sum, email},
+                {"internet", "Номер абонента", sum, email},
+                {"instalment", "Номер счета на 44", sum, email},
+                {"arrears", "Номер счета на 2073", sum, email}
 
         };
     }
