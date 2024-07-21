@@ -9,58 +9,55 @@ import java.util.List;
 
 public class IFrameTest extends BaseTest {
 
-    private String number = "297777777";
-    private String payment = "100";
-    private List<String> logoIframeList = List.of("mastercard", "visa", "belkart", "mir", "maestro");
+    private final String NUMBER = "297777777";
 
-    private List<String> titleFieldIFrame = List.of(payment+".00 BYN", "Оплата: Услуги связи Номер:375"+number, "Номер карты",
-            "Срок действия", "Имя держателя (как на карте)", "CVC", "Оплатить "+payment+".00 BYN");
+    private final String PAYMENT = "100";
 
-    @Test(description = "Check if logos in module online-pay are displayed", dataProvider = "logosIframeInfo")
-    public void checkLogoIframeDisplayedTest(String number, String payment, int amount, List<String> logoname) {
+    private final List<String> LOGO_LIST = List.of("mastercard", "visa", "belkart", "mir", "maestro");
+
+    private final List<String> TITLE_FIELD = List.of(PAYMENT + ".00 BYN", "Оплата: Услуги связи Номер:375" + NUMBER,
+            "Номер карты", "Срок действия", "Имя держателя (как на карте)", "CVC", "Оплатить " + PAYMENT + ".00 BYN");
+
+    @Test(description = "Check if logos in iFrame are displayed", dataProvider = "logosInfo")
+    public void checkLogoDisplayedTest(String number, String payment, int amount, List<String> logoname) {
 
         IFrame iFrame = getPaymentModule().buttonClick(number, payment);
-        iFrame.wait5(iFrame.paymentText);
 
-        Assert.assertEquals(iFrame.logosIframe.size(), amount);
+        Assert.assertEquals(iFrame.listLogosNameIframe().size(), amount);
 
         for (int i = 0; i < logoname.size(); i++) {
             iFrame.wait5(iFrame.logosIframe.get(i));
             Assert.assertTrue(iFrame.logosIframe.get(i).isDisplayed());
             Assert.assertTrue(iFrame.listLogosNameIframe().get(i).contains(logoname.get(i)));
         }
-
         iFrame.closeIFrame();
     }
 
     @DataProvider
-    public Object[][] logosIframeInfo() {
+    public Object[][] logosInfo() {
 
         return new Object[][]{
-                {number, payment, 5, logoIframeList}
+                {NUMBER, PAYMENT, 5, LOGO_LIST}
         };
     }
 
-        @Test(description = "Check field information", dataProvider = "fieldInformation")
+    @Test(description = "Check field information", dataProvider = "fieldInformation")
     void checkFieldInformationTest(String number, String payment, List<String> expected) {
 
         IFrame iFrame = getPaymentModule().buttonClick(number, payment);
-        iFrame.wait5(iFrame.paymentText);
 
         List<String> actualField = iFrame.listPlaceholderName();
 
         for (int i = 0; i < actualField.size(); i++) {
             Assert.assertEquals(iFrame.listPlaceholderName().get(i), expected.get(i));
         }
-            iFrame.closeIFrame();
-
+        iFrame.closeIFrame();
     }
 
-        @DataProvider
+    @DataProvider
     public Object[][] fieldInformation() {
         return new Object[][]{
-                {number, payment, titleFieldIFrame}
+                {NUMBER, PAYMENT, TITLE_FIELD}
         };
     }
-
 }

@@ -60,9 +60,8 @@ public class MTSTest extends BaseTest {
     void checkButtonWorksTest(String number, String payment) {
 
         IFrame iFrame = getPaymentModule().buttonClick(number, payment);
-        getPaymentModule().wait5(iFrame.paymentText);
 
-        Assert.assertEquals(iFrame.paymentText.getText(), payment + ".00 BYN",
+        Assert.assertEquals(iFrame.getPaymentText(), payment + ".00 BYN",
                 "Ошибка в сообщении с суммой");
 
         iFrame.closeIFrame();
@@ -96,7 +95,6 @@ public class MTSTest extends BaseTest {
                 {"internet", "Номер абонента", sum, email},
                 {"instalment", "Номер счета на 44", sum, email},
                 {"arrears", "Номер счета на 2073", sum, email}
-
         };
     }
 }

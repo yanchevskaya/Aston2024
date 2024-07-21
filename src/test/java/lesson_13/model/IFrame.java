@@ -15,45 +15,56 @@ public class IFrame extends BasePage {
     }
 
     @FindBy(xpath = "(//div[@class='pay-description__cost']/span)[1]")
-    public WebElement paymentText;
+    private WebElement paymentTitle;
 
     @FindBy(xpath = "(//div[@class='pay-description__text']/span)[1]")
-    public WebElement numberText;
+    private WebElement numberText;
 
     @FindBy(className = "header__close-icon")
-    WebElement close;
+    private WebElement close;
 
     @FindBy(xpath = "//button[@class='colored disabled']")
-    public WebElement buttonPay;
+    private WebElement buttonPay;
 
     @FindBy(xpath = "//label[@class = 'ng-tns-c46-1 ng-star-inserted']")
-    public WebElement cardNumber;
+    private WebElement cardNumber;
 
     @FindBy(xpath = "//label[@class = 'ng-tns-c46-4 ng-star-inserted']")
-    public WebElement validity;
+    private WebElement validity;
 
     @FindBy(xpath = "//label[@class = 'ng-tns-c46-3 ng-star-inserted']")
-    public WebElement userName;
+    private WebElement userName;
 
     @FindBy(xpath = "//label[@class = 'ng-tns-c46-5 ng-star-inserted']")
-    public WebElement CVC;
+    private WebElement CVC;
 
     @FindBy(xpath = "//div[@class='cards-brands ng-tns-c46-1']//img")
     public List<WebElement> logosIframe;
 
+    public String getPaymentText(){
+        wait5(paymentTitle);
 
-     public List<String> listLogosNameIframe() {
+        return paymentTitle.getText();
+    }
+
+    public List<String> listLogosNameIframe() {
+        wait5(paymentTitle);
+
         List<String> logosName = new ArrayList<>();
+
         for (WebElement element : logosIframe) {
             logosName.add(element.getAttribute("src"));
         }
+
         return logosName;
     }
 
     public List<String> listPlaceholderName() {
+        wait5(paymentTitle);
+
         List<String> filedTitle = new ArrayList<>();
 
-        filedTitle.add(paymentText.getText());
+        filedTitle.add(paymentTitle.getText());
         filedTitle.add(numberText.getText());
         filedTitle.add(cardNumber.getText());
         filedTitle.add(validity.getText());
@@ -65,7 +76,9 @@ public class IFrame extends BasePage {
     }
 
     public void closeIFrame() {
+
         close.click();
+
         getWebDriver().navigate().refresh();
     }
 }
