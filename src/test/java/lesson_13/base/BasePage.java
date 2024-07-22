@@ -21,7 +21,7 @@ public abstract class BasePage {
     }
 
     public void wait5(WebElement webElement) {
-        new WebDriverWait(getWebDriver(), Duration.ofSeconds(5))
+        new WebDriverWait(getWebDriver(), Duration.ofSeconds(7))
                 .until(ExpectedConditions.visibilityOf(webElement));
     }
 }

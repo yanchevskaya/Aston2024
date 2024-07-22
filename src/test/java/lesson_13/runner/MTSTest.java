@@ -59,7 +59,7 @@ public class MTSTest extends BaseTest {
     @Test(description = "Check payment button", dataProvider = "button")
     void checkButtonWorksTest(String number, String payment) {
 
-        IFrame iFrame = getPaymentModule().buttonClick(number, payment);
+        IFrame iFrame = getPaymentModule().sendParametersAndButtonClick(number, payment);
 
         Assert.assertEquals(iFrame.getPaymentText(), payment + ".00 BYN",
                 "Ошибка в сообщении с суммой");
@@ -74,15 +74,18 @@ public class MTSTest extends BaseTest {
         };
     }
 
-    @Test(dataProvider = "connection")
+    @Test(description = "Check information in placeholders", dataProvider = "connection")
     void checkPlaceholderTextTest(String option, String number, String amount, String email) {
         List<String> listPlaceholders;
 
         listPlaceholders = getPaymentModule().checkPlaceholderText(option);
 
-        Assert.assertEquals(listPlaceholders.get(0), number);
-        Assert.assertEquals(listPlaceholders.get(1), amount);
-        Assert.assertEquals(listPlaceholders.get(2), email);
+        Assert.assertEquals(listPlaceholders.get(0), number,
+                "Wrong information in field name, option: " + option);
+        Assert.assertEquals(listPlaceholders.get(1), amount,
+                "Wrong information in field sum, option: " + option);
+        Assert.assertEquals(listPlaceholders.get(2), email,
+                "Wrong information in field email, option: " + option);
     }
 
     @DataProvider

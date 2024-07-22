@@ -1,6 +1,7 @@
 package lesson_13.model;
 
 import lesson_13.base.BasePage;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -39,27 +40,37 @@ public class IFrame extends BasePage {
     private WebElement CVC;
 
     @FindBy(xpath = "//div[@class='cards-brands ng-tns-c46-1']//img")
-    public List<WebElement> logosIframe;
+    private List<WebElement> logos;
 
     public String getPaymentText(){
+
         wait5(paymentTitle);
 
         return paymentTitle.getText();
     }
 
-    public List<String> listLogosNameIframe() {
+    public boolean checkLogoDisplayed(){
+        boolean result = false;
+        for (WebElement element : logos){
+            wait5(element);
+            result = element.isDisplayed();
+        }
+        return result;
+    }
+
+    public List<String> getListLogosName() {
         wait5(paymentTitle);
 
         List<String> logosName = new ArrayList<>();
 
-        for (WebElement element : logosIframe) {
+        for (WebElement element : logos) {
             logosName.add(element.getAttribute("src"));
         }
 
         return logosName;
     }
 
-    public List<String> listPlaceholderName() {
+    public List<String> getListPlaceholderName() {
         wait5(paymentTitle);
 
         List<String> filedTitle = new ArrayList<>();
@@ -76,10 +87,8 @@ public class IFrame extends BasePage {
     }
 
     public void closeIFrame() {
-
         close.click();
-
-        getWebDriver().navigate().refresh();
+        getWebDriver().switchTo().defaultContent();
     }
 }
 

@@ -4,17 +4,13 @@ import lesson_13.base.BasePage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.time.Duration;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class PaymentModule extends BasePage {
 
@@ -23,58 +19,61 @@ public class PaymentModule extends BasePage {
     }
 
     @FindBy(css = "div.pay__wrapper h2")
-    WebElement moduleName;
+    private WebElement moduleName;
 
     @FindBy(id = "cookie-agree")
-    WebElement cookies;
+    private WebElement cookies;
 
     @FindBy(xpath = "//div[@class='pay__partners']//img")
-    List<WebElement> logos;
+    private List<WebElement> logos;
 
     @FindBy(linkText = "Подробнее о сервисе")
-    WebElement link;
+    private WebElement link;
 
     @FindBy(className = "select__wrapper")
-    WebElement chooseOption;
+    private WebElement chooseOption;
+
     @FindBy(id = "connection-phone")
-    WebElement phoneNumber;
+    private WebElement phoneNumber;
 
     @FindBy(id = "connection-sum")
-    WebElement paymentAmountPhone;
+    private WebElement paymentAmountPhone;
 
     @FindBy(id = "connection-email")
-    WebElement emailPhone;
+    private WebElement emailPhone;
+
     @FindBy(xpath = "//form[@id='pay-connection']/button")
-    WebElement buttonContinue;
+    private WebElement buttonContinue;
 
     @FindBy(id = "internet-phone")
-    WebElement internet;
+    private WebElement internet;
 
     @FindBy(id = "internet-sum")
-    WebElement paymentAmountInternet;
+    private WebElement paymentAmountInternet;
 
     @FindBy(id = "internet-email")
-    WebElement emailInternet;
+    private WebElement emailInternet;
 
     @FindBy(id = "score-instalment")
-    WebElement instalment;
+    private WebElement instalment;
 
     @FindBy(id = "instalment-sum")
-    WebElement instalmentSum;
+    private WebElement instalmentSum;
 
     @FindBy(id = "instalment-email")
-    WebElement instalmentEmail;
+    private WebElement instalmentEmail;
 
     @FindBy(id = "score-arrears")
-    WebElement arrears;
+    private WebElement arrears;
 
     @FindBy(id = "arrears-sum")
-    WebElement arrearsSum;
+    private WebElement arrearsSum;
 
     @FindBy(id = "arrears-email")
-    WebElement arrearsEmail;
+    private WebElement arrearsEmail;
+
     @FindBy(xpath = "//iframe[@class='bepaid-iframe']")
-    WebElement iFrame;
+    private WebElement iFrame;
 
 
     //принять cookies
@@ -121,7 +120,7 @@ public class PaymentModule extends BasePage {
     }
 
     //Заполнить поля и проверить работу кнопки «Продолжить»
-    public IFrame buttonClick(String number, String payment) {
+    public IFrame sendParametersAndButtonClick(String number, String payment) {
         phoneNumber.sendKeys(number);
         paymentAmountPhone.sendKeys(payment);
         buttonContinue.click();
@@ -131,10 +130,17 @@ public class PaymentModule extends BasePage {
     }
 
     void chooseOptionConnection(String choice) {
+        Actions action = new Actions(getWebDriver());
+
         WebElement option = getWebDriver().findElement(By.xpath("//p[text()='" + choice + "']"));
         chooseOption.click();
+
         wait5(option);
-        option.click();
+
+        action.moveToElement(option)
+                .click()
+                .build()
+                .perform();
     }
 
 

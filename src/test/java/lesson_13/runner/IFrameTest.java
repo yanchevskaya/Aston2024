@@ -18,17 +18,19 @@ public class IFrameTest extends BaseTest {
     private final List<String> TITLE_FIELD = List.of(PAYMENT + ".00 BYN", "Оплата: Услуги связи Номер:375" + NUMBER,
             "Номер карты", "Срок действия", "Имя держателя (как на карте)", "CVC", "Оплатить " + PAYMENT + ".00 BYN");
 
-    @Test(description = "Check if logos in iFrame are displayed", dataProvider = "logosInfo")
-    public void checkLogoDisplayedTest(String number, String payment, int amount, List<String> logoname) {
+    @Test(description = "Check information about logos in iFrame", dataProvider = "logosInfo")
+    public void checkLogoTest(String number, String payment, int amount, List<String> logoname) {
 
-        IFrame iFrame = getPaymentModule().buttonClick(number, payment);
+        IFrame iFrame = getPaymentModule().sendParametersAndButtonClick(number, payment);
 
-        Assert.assertEquals(iFrame.listLogosNameIframe().size(), amount);
+        Assert.assertEquals(iFrame.getListLogosName().size(), amount,
+                "Wrong amount of logos");
+
+        Assert.assertTrue(iFrame.checkLogoDisplayed(), "Логотип не отображается");
 
         for (int i = 0; i < logoname.size(); i++) {
-            iFrame.wait5(iFrame.logosIframe.get(i));
-            Assert.assertTrue(iFrame.logosIframe.get(i).isDisplayed());
-            Assert.assertTrue(iFrame.listLogosNameIframe().get(i).contains(logoname.get(i)));
+            Assert.assertTrue(iFrame.getListLogosName().get(i).contains(logoname.get(i)), "" +
+                    "The logo is wrong");
         }
         iFrame.closeIFrame();
     }
@@ -44,12 +46,13 @@ public class IFrameTest extends BaseTest {
     @Test(description = "Check field information", dataProvider = "fieldInformation")
     void checkFieldInformationTest(String number, String payment, List<String> expected) {
 
-        IFrame iFrame = getPaymentModule().buttonClick(number, payment);
+        IFrame iFrame = getPaymentModule().sendParametersAndButtonClick(number, payment);
 
-        List<String> actualField = iFrame.listPlaceholderName();
+        List<String> actualField = iFrame.getListPlaceholderName();
 
         for (int i = 0; i < actualField.size(); i++) {
-            Assert.assertEquals(iFrame.listPlaceholderName().get(i), expected.get(i));
+            Assert.assertEquals(iFrame.getListPlaceholderName().get(i), expected.get(i),
+                    "The title in field is wrong");
         }
         iFrame.closeIFrame();
     }
