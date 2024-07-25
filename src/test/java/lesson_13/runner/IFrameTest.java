@@ -6,6 +6,7 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 public class IFrameTest extends BaseTest {
 
@@ -13,7 +14,13 @@ public class IFrameTest extends BaseTest {
 
     private final String PAYMENT = "100";
 
-    private final List<String> LOGO_LIST = List.of("mastercard", "visa", "belkart", "mir", "maestro");
+    private final List<String> LOGO_LIST = List.of(
+            "https://checkout.bepaid.by/widget_v2/assets/images/payment-icons/card-types/visa-system.svg",
+            "https://checkout.bepaid.by/widget_v2/assets/images/payment-icons/card-types/mastercard-system.svg",
+            "https://checkout.bepaid.by/widget_v2/assets/images/payment-icons/card-types/belkart-system.svg",
+            "https://checkout.bepaid.by/widget_v2/assets/images/payment-icons/card-types/maestro-system.svg",
+            "https://checkout.bepaid.by/widget_v2/assets/images/payment-icons/card-types/mir-system-ru.svg");
+
 
     private final List<String> TITLE_FIELD = List.of(PAYMENT + ".00 BYN", "Оплата: Услуги связи Номер:375" + NUMBER,
             "Номер карты", "Срок действия", "Имя держателя (как на карте)", "CVC", "Оплатить " + PAYMENT + ".00 BYN");
@@ -29,8 +36,9 @@ public class IFrameTest extends BaseTest {
         Assert.assertTrue(iFrame.checkLogoDisplayed(), "Логотип не отображается");
 
         for (int i = 0; i < logoname.size(); i++) {
-            Assert.assertTrue(iFrame.getListLogosName().get(i).contains(logoname.get(i)), "" +
-                    "The logo is wrong");
+
+            Assert.assertListContainsObject(iFrame.getListLogosName(), logoname.get(i),
+                    "Wrong logo:  " + logoname.get(i));
         }
         iFrame.closeIFrame();
     }
