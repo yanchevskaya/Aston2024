@@ -3,9 +3,7 @@ package lesson_17.api;
 import org.hamcrest.Matchers;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-
 import java.util.List;
-
 import static io.restassured.RestAssured.given;
 
 public class EchoPostmanTest {
@@ -16,11 +14,13 @@ public class EchoPostmanTest {
     private final String PROTO = "https";
     private final String PORT = "443";
     private final String TYPE_JSON = "application/json";
+    private final String TYPE_URLENCODED = "application/x-www-form-urlencoded; charset=utf-8";
     private final String USER_AGENT = "Apache-HttpClient/4.5.13 (Java/18.0.2)";
     private final String ENCODING = "gzip,deflate";
 
     List<String> headersListJSon = List.of(HOST, PROTO, PORT, TYPE_JSON, USER_AGENT, ENCODING);
-    List<String> headersListURLen = List.of(HOST, PROTO, PORT, TYPE_JSON, USER_AGENT, ENCODING);
+    List<String> headersListURLen = List.of(HOST, PROTO, PORT, TYPE_URLENCODED, USER_AGENT, ENCODING);
+
     @Test
     public void getRequestTest() {
 
@@ -30,11 +30,13 @@ public class EchoPostmanTest {
                 .get("/get?foo1=bar1&foo2=bar2")
                 .then()
                 .log().body()
+                //first option
                 .extract().body().jsonPath().getObject("args", EchoPojo.class);
 
         Assert.assertEquals(param.getFoo1(), "bar1");
         Assert.assertEquals(param.getFoo2(), "bar2");
 
+        //second option
 //                .assertThat()
 //                .body("args.foo1", Matchers.equalTo("bar1"))
 //                .body("args.foo2", Matchers.equalTo("bar2"));
@@ -43,10 +45,9 @@ public class EchoPostmanTest {
                 .when()
                 .get("/get?foo1=bar1&foo2=bar2")
                 .then()
-                .log().body()
                 .extract().body().jsonPath().getObject("headers", HeadersPojo.class);
 
-        Assert.assertTrue(headers.isTrueListCon(headersListJSon));
+        Assert.assertTrue(headers.isListEqual(headersListJSon));
 
     }
 
@@ -61,7 +62,7 @@ public class EchoPostmanTest {
                 .when()
                 .post("/post")
                 .then()
-                .log().all()
+                .log().body()
                 .assertThat()
                 .body("data", Matchers.equalTo(rawText));
 
@@ -70,16 +71,15 @@ public class EchoPostmanTest {
                 .when()
                 .post("/post")
                 .then()
-                .log().all()
                 .extract().body().jsonPath().getObject("headers", HeadersPojo.class);
 
-        Assert.assertTrue(headers.isTrueListCon(headersListJSon));
+        Assert.assertTrue(headers.isListEqual(headersListJSon));
     }
 
 
     @Test
     public void postFormTest() {
-        Specification.installSpecification(Specification.requestSpecificationUnlencoded(BASE_URI), Specification.responseSpecOK200());
+        Specification.installSpecification(Specification.requestSpecificationUrlencoded(BASE_URI), Specification.responseSpecOK200());
 
         EchoPojo param = given()
                 .formParam("foo1", "bar1")
@@ -88,14 +88,26 @@ public class EchoPostmanTest {
                 .post("/post")
                 .then()
                 .log().body()
+                // first option
                 .extract().body().jsonPath().getObject("form", EchoPojo.class);
 
         Assert.assertEquals(param.getFoo1(), "bar1");
         Assert.assertEquals(param.getFoo2(), "bar2");
 
+        //second option
 //                .assertThat()
 //                .body("form.foo1", Matchers.equalTo("bar1"))
 //                .body("form.foo2", Matchers.equalTo("bar2"));
+
+        HeadersPojo headers = given()
+                .formParam("foo1", "bar1")
+                .formParam("foo2", "bar2")
+                .when()
+                .post("/post")
+                .then()
+                .extract().body().jsonPath().getObject("headers", HeadersPojo.class);
+
+        Assert.assertTrue(headers.isListEqual(headersListURLen));
     }
 
     @Test
@@ -107,7 +119,7 @@ public class EchoPostmanTest {
                 .when()
                 .put("/put")
                 .then()
-                .log().all()
+                .log().body()
                 .assertThat()
                 .body("data", Matchers.equalTo(
                         expectedText));
@@ -117,10 +129,9 @@ public class EchoPostmanTest {
                 .when()
                 .put("/put")
                 .then()
-                .log().all()
                 .extract().body().jsonPath().getObject("headers", HeadersPojo.class);
 
-        Assert.assertTrue(headers.isTrueListCon(headersListJSon));
+        Assert.assertTrue(headers.isListEqual(headersListJSon));
     }
 
     @Test
@@ -132,7 +143,7 @@ public class EchoPostmanTest {
                 .when()
                 .patch("/patch")
                 .then()
-                .log().all()
+                .log().body()
                 .assertThat()
                 .body("data", Matchers.equalTo(
                         expectedText));
@@ -142,10 +153,9 @@ public class EchoPostmanTest {
                 .when()
                 .patch("/patch")
                 .then()
-                .log().all()
                 .extract().body().jsonPath().getObject("headers", HeadersPojo.class);
 
-        Assert.assertTrue(headers.isTrueListCon(headersListJSon));
+        Assert.assertTrue(headers.isListEqual(headersListJSon));
     }
 
     @Test
@@ -156,10 +166,19 @@ public class EchoPostmanTest {
                 .body(expectedText)
                 .when()
                 .delete("/delete")
-                .then().log().all()
+                .then().log().body()
                 .assertThat()
                 .body("data", Matchers.equalTo(
                         "This is expected to be sent back as part of response body."));
+
+
+        HeadersPojo headers = given()
+                .body(expectedText)
+                .when()
+                .delete("/delete")
+                .then()
+                .extract().body().jsonPath().getObject("headers", HeadersPojo.class);
+
+        Assert.assertTrue(headers.isListEqual(headersListJSon));
     }
 }
-

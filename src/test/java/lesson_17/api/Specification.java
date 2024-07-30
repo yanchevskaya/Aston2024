@@ -15,7 +15,7 @@ public class Specification {
                 .build();
     }
 
-    public static RequestSpecification requestSpecificationUnlencoded(String url){
+    public static RequestSpecification requestSpecificationUrlencoded(String url){
         return new RequestSpecBuilder()
                 .setBaseUri(url)
                 .setContentType("application/x-www-form-urlencoded; charset=utf-8")
