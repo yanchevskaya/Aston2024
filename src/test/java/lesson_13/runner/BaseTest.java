@@ -1,28 +1,38 @@
-package lesson_13;
+package lesson_13.runner;
 
+import lesson_13.model.PaymentModule;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 
-import java.time.Duration;
 
 public abstract class BaseTest {
 
     private WebDriver webDriver;
     private PaymentModule paymentModule;
 
+    private final String URL = "https://www.mts.by/";
+
     public PaymentModule getPaymentModule() {
         return paymentModule;
     }
 
+    public WebDriver initializeDriver(boolean headless) {
+        ChromeOptions options = new ChromeOptions();
+        if (headless) {
+            options.addArguments("--headless");
+        }
+        return new ChromeDriver(options);
+    }
 
     @BeforeTest
     protected void beforeTest() {
-        webDriver = new ChromeDriver();
-        webDriver.get("https://www.mts.by/");
+        webDriver = initializeDriver(true);
+        webDriver.get(URL);
+        webDriver.manage().window().maximize();
         paymentModule = new PaymentModule(webDriver);
-        webDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
         paymentModule.acceptCookies();
     }
 
