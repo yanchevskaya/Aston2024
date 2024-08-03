@@ -44,7 +44,7 @@ public class IFrame extends BasePage {
 
     public String getPaymentText(){
 
-        wait5(paymentTitle);
+        waitForVisibility5(paymentTitle);
 
         return paymentTitle.getText();
     }
@@ -52,14 +52,14 @@ public class IFrame extends BasePage {
     public boolean checkLogoDisplayed(){
         boolean result = false;
         for (WebElement element : logos){
-            wait5(element);
+            waitForVisibility5(element);
             result = element.isDisplayed();
         }
         return result;
     }
 
     public List<String> getListLogosName() {
-        wait5(paymentTitle);
+        waitForVisibility5(paymentTitle);
 
         List<String> logosName = new ArrayList<>();
 
@@ -71,7 +71,7 @@ public class IFrame extends BasePage {
     }
 
     public List<String> getListPlaceholderName() {
-        wait5(paymentTitle);
+        waitForVisibility5(paymentTitle);
 
         List<String> filedTitle = new ArrayList<>();
 

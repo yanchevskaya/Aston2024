@@ -78,7 +78,7 @@ public class PaymentModule extends BasePage {
 
     //принять cookies
     public void acceptCookies() {
-        wait5(cookies);
+        waitForVisibility5(cookies);
         cookies.click();
     }
 
@@ -124,7 +124,7 @@ public class PaymentModule extends BasePage {
         phoneNumber.sendKeys(number);
         paymentAmountPhone.sendKeys(payment);
         buttonContinue.click();
-        wait5(iFrame);
+        waitForVisibility5(iFrame);
         getWebDriver().switchTo().frame(iFrame);
         return new IFrame(getWebDriver());
     }
@@ -135,7 +135,7 @@ public class PaymentModule extends BasePage {
         WebElement option = getWebDriver().findElement(By.xpath("//p[text()='" + choice + "']"));
         chooseOption.click();
 
-        wait5(option);
+        waitForVisibility5(option);
 
         action.moveToElement(option)
                 .click()

@@ -1,5 +1,6 @@
 package lesson_13.runner;
 
+import io.qameta.allure.Owner;
 import lesson_13.model.IFrame;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
@@ -26,6 +27,7 @@ public class IFrameTest extends BaseTest {
             "Номер карты", "Срок действия", "Имя держателя (как на карте)", "CVC", "Оплатить " + PAYMENT + ".00 BYN");
 
     @Test(description = "Check information about logos in iFrame", dataProvider = "logosInfo")
+    @Owner("AI")
     public void checkLogoTest(String number, String payment, int amount, List<String> logoname) {
 
         IFrame iFrame = getPaymentModule().sendParametersAndButtonClick(number, payment);
@@ -52,6 +54,7 @@ public class IFrameTest extends BaseTest {
     }
 
     @Test(description = "Check field information", dataProvider = "fieldInformation")
+    @Owner("AI")
     void checkFieldInformationTest(String number, String payment, List<String> expected) {
 
         IFrame iFrame = getPaymentModule().sendParametersAndButtonClick(number, payment);

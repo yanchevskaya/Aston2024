@@ -20,8 +20,9 @@ public abstract class BasePage {
         return webDriver;
     }
 
-    public void wait5(WebElement webElement) {
-        new WebDriverWait(getWebDriver(), Duration.ofSeconds(7))
+    public void waitForVisibility5(WebElement webElement) {
+        new WebDriverWait(getWebDriver(), Duration.ofSeconds(5))
                 .until(ExpectedConditions.visibilityOf(webElement));
     }
+
 }

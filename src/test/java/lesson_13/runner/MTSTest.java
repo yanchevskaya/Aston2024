@@ -1,5 +1,6 @@
 package lesson_13.runner;
 
+import io.qameta.allure.Owner;
 import lesson_13.model.IFrame;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
@@ -17,6 +18,7 @@ public class MTSTest extends BaseTest {
     private final List<String> LOGO_LIST = List.of("Visa", "Verified By Visa", "MasterCard", "MasterCard Secure Code", "Белкарт");
 
     @Test(description = "Check module online-pay name")
+    @Owner("AI")
     public void checkModuleNameTest() {
 
         Assert.assertEquals(getPaymentModule().getModuleName(),
@@ -24,6 +26,7 @@ public class MTSTest extends BaseTest {
     }
 
     @Test(description = "Check if logos in module online-pay are displayed", dataProvider = "logos")
+    @Owner("AI")
     public void checkLogoDisplayedTest(int amount, List<String> logoName) {
 
         Assert.assertEquals(getPaymentModule().logoAmount(), amount);
@@ -42,6 +45,7 @@ public class MTSTest extends BaseTest {
     }
 
     @Test(description = "Check if link works")
+    @Owner("AI")
     void checkLinkWorksTest() {
 
         Assert.assertEquals(getPaymentModule().getURLLinkAboutService(), URL,
@@ -51,12 +55,14 @@ public class MTSTest extends BaseTest {
     }
 
     @Test(description = "Check if link response")
+    @Owner("AI")
     void checkLinkResponseTest() {
 
         Assert.assertTrue(getPaymentModule().checkLinkResponse() < 400);
     }
 
-    @Test(description = "Check payment button", dataProvider = "button")
+    @Test(description = "Check payment button operation", dataProvider = "button")
+    @Owner("AI")
     void checkButtonWorksTest(String number, String payment) {
 
         IFrame iFrame = getPaymentModule().sendParametersAndButtonClick(number, payment);
@@ -75,6 +81,7 @@ public class MTSTest extends BaseTest {
     }
 
     @Test(description = "Check information in placeholders", dataProvider = "connection")
+    @Owner("AI")
     void checkPlaceholderTextTest(String option, String number, String amount, String email) {
         List<String> listPlaceholders;
 

@@ -4,8 +4,8 @@ import lesson_13.model.PaymentModule;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeTest;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
 
 
 public abstract class BaseTest {
@@ -27,7 +27,7 @@ public abstract class BaseTest {
         return new ChromeDriver(options);
     }
 
-    @BeforeTest
+    @BeforeClass
     protected void beforeTest() {
         webDriver = initializeDriver(true);
         webDriver.get(URL);
@@ -37,7 +37,7 @@ public abstract class BaseTest {
     }
 
 
-    @AfterTest
+    @AfterClass
     protected void afterTest() {
         if(webDriver!=null) {
             webDriver.quit();
