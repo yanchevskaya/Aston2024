@@ -1,5 +1,6 @@
 package lesson_13.model;
 
+import io.qameta.allure.Step;
 import lesson_13.base.BasePage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -76,22 +77,25 @@ public class PaymentModule extends BasePage {
     private WebElement iFrame;
 
 
-    //принять cookies
+    @Step("Accept cookies")
     public void acceptCookies() {
         waitForVisibility5(cookies);
         cookies.click();
     }
 
+    @Step("Get module name")
     //1. Проверить название указанного блока
     public String getModuleName() {
         return moduleName.getText();
     }
 
     //2. Проверить наличие логотипов платёжных систем
+    @Step("Check number of logos")
     public int logoAmount() {
         return logos.size();
     }
 
+    @Step("Get logos name")
     public List<String> listOfLogosName() {
         List<String> logosName = new ArrayList<>();
         for (WebElement element : logos) {
@@ -101,12 +105,14 @@ public class PaymentModule extends BasePage {
     }
 
     //3. Проверить работу ссылки «Подробнее о сервисе»  *first option
+    @Step("Click link 'Подробнее о сервисе' and get new page URL")
     public String getURLLinkAboutService() {
         link.click();
         return getWebDriver().getCurrentUrl();
     }
 
     //*second option
+    @Step("Check status code when click link 'Подробнее о сервисе'")
     public int checkLinkResponse() {
         String url = link.getAttribute("href");
         try {
@@ -120,6 +126,7 @@ public class PaymentModule extends BasePage {
     }
 
     //Заполнить поля и проверить работу кнопки «Продолжить»
+    @Step("Fill fields 'номер телефона:' {number}, 'платёж:' {payment}, click button 'продолжить'")
     public IFrame sendParametersAndButtonClick(String number, String payment) {
         phoneNumber.sendKeys(number);
         paymentAmountPhone.sendKeys(payment);
@@ -129,6 +136,7 @@ public class PaymentModule extends BasePage {
         return new IFrame(getWebDriver());
     }
 
+    @Step("Choose {choice}")
     void chooseOptionConnection(String choice) {
         Actions action = new Actions(getWebDriver());
 
@@ -143,7 +151,7 @@ public class PaymentModule extends BasePage {
                 .perform();
     }
 
-
+    @Step("Get information about placeholders")
     String placeholder(WebElement element) {
         return element.getAttribute("placeholder");
     }
@@ -189,7 +197,7 @@ public class PaymentModule extends BasePage {
         return listPlaceholders;
     }
 
-
+    @Step("Return to Home page")
     public void returnToHomePage() {
         getWebDriver().navigate().back();
     }

@@ -7,6 +7,8 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import java.util.List;
 
+import static lesson_13.runner.DataTest.*;
+
 /*
 Необходимо написать автотесты для сайта mts.by - http://mts.by
 Суть тестов заключается в проверке блока «Онлайн пополнение без комиссии»:
@@ -14,8 +16,6 @@ import java.util.List;
 
 
 public class MTSTest extends BaseTest {
-    private final String URL = "https://www.mts.by/help/poryadok-oplaty-i-bezopasnost-internet-platezhey/";
-    private final List<String> LOGO_LIST = List.of("Visa", "Verified By Visa", "MasterCard", "MasterCard Secure Code", "Белкарт");
 
     @Test(description = "Check module online-pay name")
     @Owner("AI")
@@ -40,7 +40,7 @@ public class MTSTest extends BaseTest {
     @DataProvider
     public Object[][] logos() {
         return new Object[][]{
-                {5, LOGO_LIST}
+                {5, LOGO_LIST_PAYMENT_MODULE}
         };
     }
 
@@ -48,7 +48,7 @@ public class MTSTest extends BaseTest {
     @Owner("AI")
     void checkLinkWorksTest() {
 
-        Assert.assertEquals(getPaymentModule().getURLLinkAboutService(), URL,
+        Assert.assertEquals(getPaymentModule().getURLLinkAboutService(), URL_SERVICE,
                 "The link about service doesn't work");
 
         getPaymentModule().returnToHomePage();
@@ -76,9 +76,10 @@ public class MTSTest extends BaseTest {
     @DataProvider
     public Object[][] button() {
         return new Object[][]{
-                {"297777777", "100"}
+                {NUMBER, PAYMENT}
         };
     }
+
 
     @Test(description = "Check information in placeholders", dataProvider = "connection")
     @Owner("AI")

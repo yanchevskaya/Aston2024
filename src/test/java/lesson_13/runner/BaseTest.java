@@ -1,11 +1,13 @@
 package lesson_13.runner;
 
+import io.qameta.allure.Attachment;
 import lesson_13.model.PaymentModule;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
+import org.testng.annotations.*;
 
 
 public abstract class BaseTest {
@@ -18,6 +20,7 @@ public abstract class BaseTest {
     public PaymentModule getPaymentModule() {
         return paymentModule;
     }
+
 
     public WebDriver initializeDriver(boolean headless) {
         ChromeOptions options = new ChromeOptions();
@@ -39,7 +42,7 @@ public abstract class BaseTest {
 
     @AfterClass
     protected void afterTest() {
-        if(webDriver!=null) {
+        if (webDriver != null) {
             webDriver.quit();
         }
     }

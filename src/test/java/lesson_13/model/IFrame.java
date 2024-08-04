@@ -1,7 +1,8 @@
 package lesson_13.model;
 
-import lesson_13.base.BasePage;
 
+import lesson_13.base.BasePage;
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -24,7 +25,7 @@ public class IFrame extends BasePage {
     @FindBy(className = "header__close-icon")
     private WebElement close;
 
-    @FindBy(xpath = "//button[@class='colored disabled']")
+    @FindBy(xpath = "//div[@class='card-page__card']/button")
     private WebElement buttonPay;
 
     @FindBy(xpath = "//label[@class = 'ng-tns-c46-1 ng-star-inserted']")
@@ -42,6 +43,7 @@ public class IFrame extends BasePage {
     @FindBy(xpath = "//div[@class='cards-brands ng-tns-c46-1']//img")
     private List<WebElement> logos;
 
+    @Step("Get information about payment text")
     public String getPaymentText(){
 
         waitForVisibility5(paymentTitle);
@@ -49,6 +51,7 @@ public class IFrame extends BasePage {
         return paymentTitle.getText();
     }
 
+    @Step("Check that logos are displaying")
     public boolean checkLogoDisplayed(){
         boolean result = false;
         for (WebElement element : logos){
@@ -58,6 +61,7 @@ public class IFrame extends BasePage {
         return result;
     }
 
+    @Step("Get logos name")
     public List<String> getListLogosName() {
         waitForVisibility5(paymentTitle);
 
@@ -70,6 +74,7 @@ public class IFrame extends BasePage {
         return logosName;
     }
 
+    @Step("Get information about placeholders")
     public List<String> getListPlaceholderName() {
         waitForVisibility5(paymentTitle);
 
@@ -86,6 +91,7 @@ public class IFrame extends BasePage {
         return filedTitle;
     }
 
+    @Step("Close iFrame")
     public void closeIFrame() {
         close.click();
         getWebDriver().switchTo().defaultContent();
