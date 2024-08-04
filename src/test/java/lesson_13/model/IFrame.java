@@ -1,7 +1,8 @@
 package lesson_13.model;
 
-import lesson_13.base.BasePage;
 
+import lesson_13.base.BasePage;
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -24,7 +25,7 @@ public class IFrame extends BasePage {
     @FindBy(className = "header__close-icon")
     private WebElement close;
 
-    @FindBy(xpath = "//button[@class='colored disabled']")
+    @FindBy(xpath = "//div[@class='card-page__card']/button")
     private WebElement buttonPay;
 
     @FindBy(xpath = "//label[@class = 'ng-tns-c46-1 ng-star-inserted']")
@@ -42,24 +43,27 @@ public class IFrame extends BasePage {
     @FindBy(xpath = "//div[@class='cards-brands ng-tns-c46-1']//img")
     private List<WebElement> logos;
 
+    @Step("Get information about payment text")
     public String getPaymentText(){
 
-        wait5(paymentTitle);
+        waitForVisibility5(paymentTitle);
 
         return paymentTitle.getText();
     }
 
+    @Step("Check that logos are displaying")
     public boolean checkLogoDisplayed(){
         boolean result = false;
         for (WebElement element : logos){
-            wait5(element);
+            waitForVisibility5(element);
             result = element.isDisplayed();
         }
         return result;
     }
 
+    @Step("Get logos name")
     public List<String> getListLogosName() {
-        wait5(paymentTitle);
+        waitForVisibility5(paymentTitle);
 
         List<String> logosName = new ArrayList<>();
 
@@ -70,8 +74,9 @@ public class IFrame extends BasePage {
         return logosName;
     }
 
+    @Step("Get information about placeholders")
     public List<String> getListPlaceholderName() {
-        wait5(paymentTitle);
+        waitForVisibility5(paymentTitle);
 
         List<String> filedTitle = new ArrayList<>();
 
@@ -86,6 +91,7 @@ public class IFrame extends BasePage {
         return filedTitle;
     }
 
+    @Step("Close iFrame")
     public void closeIFrame() {
         close.click();
         getWebDriver().switchTo().defaultContent();

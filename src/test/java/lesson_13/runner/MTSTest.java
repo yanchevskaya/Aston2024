@@ -1,10 +1,13 @@
 package lesson_13.runner;
 
+import io.qameta.allure.Owner;
 import lesson_13.model.IFrame;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import java.util.List;
+
+import static lesson_13.runner.DataTest.*;
 
 /*
 Необходимо написать автотесты для сайта mts.by - http://mts.by
@@ -13,10 +16,9 @@ import java.util.List;
 
 
 public class MTSTest extends BaseTest {
-    private final String URL = "https://www.mts.by/help/poryadok-oplaty-i-bezopasnost-internet-platezhey/";
-    private final List<String> LOGO_LIST = List.of("Visa", "Verified By Visa", "MasterCard", "MasterCard Secure Code", "Белкарт");
 
     @Test(description = "Check module online-pay name")
+    @Owner("AI")
     public void checkModuleNameTest() {
 
         Assert.assertEquals(getPaymentModule().getModuleName(),
@@ -24,6 +26,7 @@ public class MTSTest extends BaseTest {
     }
 
     @Test(description = "Check if logos in module online-pay are displayed", dataProvider = "logos")
+    @Owner("AI")
     public void checkLogoDisplayedTest(int amount, List<String> logoName) {
 
         Assert.assertEquals(getPaymentModule().logoAmount(), amount);
@@ -37,26 +40,29 @@ public class MTSTest extends BaseTest {
     @DataProvider
     public Object[][] logos() {
         return new Object[][]{
-                {5, LOGO_LIST}
+                {5, LOGO_LIST_PAYMENT_MODULE}
         };
     }
 
     @Test(description = "Check if link works")
+    @Owner("AI")
     void checkLinkWorksTest() {
 
-        Assert.assertEquals(getPaymentModule().getURLLinkAboutService(), URL,
+        Assert.assertEquals(getPaymentModule().getURLLinkAboutService(), URL_SERVICE,
                 "The link about service doesn't work");
 
         getPaymentModule().returnToHomePage();
     }
 
     @Test(description = "Check if link response")
+    @Owner("AI")
     void checkLinkResponseTest() {
 
         Assert.assertTrue(getPaymentModule().checkLinkResponse() < 400);
     }
 
-    @Test(description = "Check payment button", dataProvider = "button")
+    @Test(description = "Check payment button operation", dataProvider = "button")
+    @Owner("AI")
     void checkButtonWorksTest(String number, String payment) {
 
         IFrame iFrame = getPaymentModule().sendParametersAndButtonClick(number, payment);
@@ -70,11 +76,13 @@ public class MTSTest extends BaseTest {
     @DataProvider
     public Object[][] button() {
         return new Object[][]{
-                {"297777777", "100"}
+                {NUMBER, PAYMENT}
         };
     }
 
+
     @Test(description = "Check information in placeholders", dataProvider = "connection")
+    @Owner("AI")
     void checkPlaceholderTextTest(String option, String number, String amount, String email) {
         List<String> listPlaceholders;
 
